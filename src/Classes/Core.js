@@ -1,12 +1,13 @@
 const { Logger } = require('./Logger');
 const { Config } = require('./Config.js');
+const util = require('util')
 class Core {
     constructor(client) {
         this.client = client
 
         this.logger = new Logger({host: this.client.config.host, port: this.client.config.port})
         try {
-            this.coreconfig = this.client.config.config._config.core
+            this.coreconfig = this.client.config.core
         } catch {}
 
         this.core = {
@@ -28,7 +29,8 @@ class Core {
     }
 
     refill = async () => {
-        this.config = await Config.load(this.client)
+        const configInstance = new Config()
+        this.config = await configInstance.init(this.client)
 
         const pos = this.core.pos
         const corepos = this.core.placement

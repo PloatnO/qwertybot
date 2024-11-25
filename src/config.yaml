@@ -6,6 +6,7 @@ servers:
   - host: 'chipmunk.land'
     port: 25565
     core: true
+    
   - host: 'nekoboom.bongocatsmp.site'
     port: 25565
     core: true

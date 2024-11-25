@@ -4,7 +4,7 @@ class Functions {
     constructor(client) {
         this.client = client
         this.logger = new Logger({host: this.client.config.host, port: this.client.config.port})
-        this.config = this.client.config.config._config
+        this.config = this.client.config
         this.init()
     }
 

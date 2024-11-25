@@ -7,7 +7,8 @@ const { Console } = require('./Classes/Console')
 const ChatMessage = require('prismarine-chat')('1.20.4')
 
 async function init() {
-    const config = await Config.load()
+    const configInstance = new Config()
+    const config = await configInstance.init()
     config.servers.forEach(server => {
         startClient(server)
     });
@@ -19,14 +20,15 @@ async function startClient(options) {
     const client = new Client(options)
     client.startClient = startClient
     client.serverInfo = options
-    client.CorePlugin = Core
-    const config = await Config.load()
+    const configInstance = new Config()
+    const config = await configInstance.init()
     client.ChatMessage = ChatMessage
     client.config = {
-        ...client.config,
-        config
+        host: client.host,
+        port: client.port,
+        ...config
     }
-    client.scheme = client.config.config._config.scheme
+    client.scheme = client.config.scheme
     new Functions(client)
     new Position(client)
 
