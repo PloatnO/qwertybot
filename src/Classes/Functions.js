@@ -26,14 +26,18 @@ class Functions {
 
     init() {
 
-        this.client.on('custom_playerChat',(msg)=>{
-            this.logger.debug(this.client.ChatMessage.fromNotch(msg).toAnsi())
-        })
+        if(this.client.config.bot.chatLogging === true) {
+            this.client.on('custom_playerChat',(msg)=>{
+                this.logger.debug(this.client.ChatMessage.fromNotch(msg).toAnsi())
+            })
 
-        this.client.on('custom_systemChat',(vmsg)=>{
-            if (vmsg.includes('Q()Bot-Console') || vmsg.includes('Command set:')) return
-            this.logger.debug(vmsg)
-        })
+            this.client.on('custom_systemChat',(vmsg)=>{
+                if (vmsg.includes('Q()Bot-Console') || vmsg.includes('Command set:')) return
+                this.logger.debug(vmsg)
+            })
+        } else {
+            this.logger.warn('Chat Logging is disabled maybe this is intentional? | config.yaml: L32')
+        }
     
         this.client.on('login', ()=>{
             this.logger.log('Logged in')

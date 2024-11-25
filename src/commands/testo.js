@@ -15,11 +15,11 @@ function execute(data) {
 }
 
 module.exports = {
-    name: "test",
-    description: "Test command",
+    name: "testo",
+    description: "Test Owner command",
     usage: [
-        "test <>"
+        "testo <>"
     ],
-    level: 'public',
+    level: 'owner',
     execute: execute
 }
