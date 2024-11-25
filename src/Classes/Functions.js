@@ -1,5 +1,6 @@
 const { Logger } = require('./Logger');
 const { Core } = require('./Core')
+
 class Functions {
     constructor(client) {
         this.client = client
@@ -14,7 +15,7 @@ class Functions {
                 this.client.core = new Core(this.client)
                 this.client.on('core:refilled',()=>{
                     setTimeout(() => {
-                        this.client.core.run(`sudo ${this.client.username} /prefix ${this.config.selfcare.prefix}`)
+                        this.client.core.run(`sudo ${this.client.username} prefix ${this.config.selfcare.prefix}`)
                     }, 75);
                 })
             } else {
@@ -24,6 +25,15 @@ class Functions {
     }
 
     init() {
+
+        this.client.on('custom_playerChat',(msg)=>{
+            this.logger.debug(this.client.ChatMessage.fromNotch(msg).toAnsi())
+        })
+
+        this.client.on('custom_systemChat',(vmsg)=>{
+            if (vmsg.includes('Q()Bot-Console') || vmsg.includes('Command set:')) return
+            this.logger.debug(vmsg)
+        })
     
         this.client.on('login', ()=>{
             this.logger.log('Logged in')

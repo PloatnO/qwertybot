@@ -1,16 +1,19 @@
 const { Client } = require('./Classes/Client.js');
 const { Config } = require('./Classes/Config.js');
 const { Functions } = require('./Classes/Functions.js');
-const { Core } = require('./Classes/Core.js')
 const { Position } = require('./Classes/Position.js')
-const { Console } = require('./Classes/Console')
+const { Console } = require('./Classes/Konsole.js')
+const { Parser } = require('./Classes/Parser.js')
+const ChatParser = require('./chatparser/parser.js')
 const ChatMessage = require('prismarine-chat')('1.20.4')
 
 async function init() {
     const configInstance = new Config()
     const config = await configInstance.init()
     config.servers.forEach(server => {
-        startClient(server)
+        startClient({
+            ...server
+        })
     });
 }
 
@@ -24,11 +27,13 @@ async function startClient(options) {
     const config = await configInstance.init()
     client.ChatMessage = ChatMessage
     client.config = {
-        host: client.host,
-        port: client.port,
+        host: options.host,
+        port: options.port,
         ...config
     }
     client.scheme = client.config.scheme
+    ChatParser.inject(client)
+    new Parser(client)
     new Functions(client)
     new Position(client)
 

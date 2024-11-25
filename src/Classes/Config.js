@@ -1,8 +1,7 @@
-// index.js
 const fs = require('fs').promises;
 const yaml = require('yaml');
 const path = require('path');
-const { Logger } = require('./Logger'); // Ensure Logger is implemented correctly
+const { Logger } = require('./Logger');
 const configFilePath = path.join(__dirname, '../config.yaml');
 
 class Config {

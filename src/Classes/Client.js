@@ -5,6 +5,7 @@ class Client {
         this.options = options
         const client = protocol.createClient({
             username: Math.floor(Math.random() * 2) === 0 ? 'Q(werty)bot' : 'Qbot',
+            version: '1.20.4',
             ...options
         })
         client.config = options
