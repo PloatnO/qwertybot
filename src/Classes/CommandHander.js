@@ -40,16 +40,17 @@ class CommandHandler {
                 customchat: packet.chipmunkmod,
                 rawMsg: packet .rawMessage
             };
-            this.logger.log(data.message);
             prefixes.forEach(c => {
                 const commandSuffix = data.command.slice(c.length);
                 if (data.command.startsWith(c)) {
                     const cmd = this.commands.find(b => b.name === commandSuffix);
                     if (cmd) {
                         const hash = data.message.split(' ')[0];
-                        const isauth = (cmd.level === 'owner' && hash === this.client.hashes.ownerhash) ||
-                                            (cmd.level === 'trusted' && hash === this.client.hashes.trustedhash) ||
-                                            cmd.level === 'public'; // Assuming 'user' level doesn't require a hash check
+                        this.logger.log(hash)
+                        this.logger.log(this.client.hashes.owner)
+                        const isauth = (cmd.level === 'owner' && hash === this.client.hashes.owner) ||
+                                            (cmd.level === 'trusted' && hash === this.client.hashes.trusted) ||
+                                            cmd.level === 'public';
     
                         if (isauth) {
                             cmd.execute({

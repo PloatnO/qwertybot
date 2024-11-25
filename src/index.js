@@ -5,6 +5,7 @@ const { Position } = require('./Classes/Position.js')
 const { Console } = require('./Classes/Konsole.js')
 const { Parser } = require('./Classes/Parser.js')
 const { CommandHandler } = require('./Classes/CommandHander.js')
+const { Hashing } = require('./Classes/Hashing.js')
 const ChatParser = require('./chatparser/parser.js')
 const ChatMessage = require('prismarine-chat')('1.20.4')
 
@@ -33,17 +34,13 @@ async function startClient(options) {
         ...config
     }
 
-    client.hashes = {
-        ownerhash: 'test',
-        trustedhash: 'test2'
-    }
-
     client.scheme = client.config.scheme
     ChatParser.inject(client)
     new Parser(client)
     new Functions(client)
     new Position(client)
     new CommandHandler(client)
+    new Hashing(client)
 
     clients.add(client)
     client.clients = clients
