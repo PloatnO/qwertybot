@@ -17,7 +17,7 @@ class Core {
             },
             pos: {
                 x: Math.floor(this.client.pos.x / 16) * 16,
-                y: this.client.pos.y,
+                y: this.client.config.core.start.y,
                 z: Math.floor(this.client.pos.z / 16) * 16
             }
         }

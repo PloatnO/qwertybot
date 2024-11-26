@@ -5,6 +5,7 @@ const { Position } = require('./Classes/Position.js')
 const { Console } = require('./Classes/Konsole.js')
 const { Parser } = require('./Classes/Parser.js')
 const { CommandHandler } = require('./Classes/CommandHander.js')
+const { Selfcare } = require('./Classes/Selfcare')
 const { Hashing } = require('./Classes/Hashing.js')
 const ChatParser = require('./chatparser/parser.js')
 const ChatMessage = require('prismarine-chat')('1.20.4')
@@ -41,6 +42,7 @@ async function startClient(options) {
     new Position(client)
     new CommandHandler(client)
     new Hashing(client)
+    new Selfcare(client)
 
     clients.add(client)
     client.clients = clients
