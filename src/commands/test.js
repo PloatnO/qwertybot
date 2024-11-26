@@ -21,5 +21,8 @@ module.exports = {
         "test <>"
     ],
     level: 'public',
+    aliases: [
+        "besttest"
+    ],
     execute: execute
 }

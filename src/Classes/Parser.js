@@ -24,7 +24,7 @@ class Parser {
         }
         parsers.forEach((c)=>{
             const parser = require(path.join(__dirname, parsersDir)+'/'+c)
-            this.parses.push(parser)
+            this.parses.push(parser.inject(this.client))
         })
     }
 }

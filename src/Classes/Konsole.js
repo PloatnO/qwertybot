@@ -21,6 +21,14 @@ class Console {
     }
 
     handleInput(input) {
+        if (input.startsWith('.')) {
+            if (input.startsWith('.core')) {
+                const cmd = input.substring(`.core `.length)
+                this.clients.forEach((c)=>{
+                    c.core.run(cmd)
+                })
+            }
+        }
         if (input === 'exit') {
             this.logger.error('Exiting console...');
             process.exit();

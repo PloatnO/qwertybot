@@ -43,16 +43,25 @@ class CommandHandler {
             prefixes.forEach(c => {
                 const commandSuffix = data.command.slice(c.length);
                 if (data.command.startsWith(c)) {
-                    const cmd = this.commands.find(b => b.name === commandSuffix);
+                    const cmd = this.commands.find(b => b.name === commandSuffix || b.aliases.includes(commandSuffix));
                     if (cmd) {
                         const hash = data.message.split(' ')[0];
                         this.logger.log(hash)
                         this.logger.log(this.client.hashes.owner)
-                        const isauth = (cmd.level === 'owner' && hash === this.client.hashes.owner) ||
-                                            (cmd.level === 'trusted' && hash === this.client.hashes.trusted) ||
-                                            cmd.level === 'public';
+                        function mapHash(hash) {
+                            return hash.split('').map(char => '§' + char).join('') + '§r';
+                        }
+
+                        const ownerHash = this.client.hashes.owner;
+                        const trustedHash = this.client.hashes.trusted;
+                        const mappedOwnerHash = mapHash(ownerHash);
+                        const mappedTrustedHash = mapHash(trustedHash);
+
+                        const isAuth = (cmd.level === 'owner' && (hash === ownerHash || hash === mappedOwnerHash)) ||
+                                    (cmd.level === 'trusted' && (hash === trustedHash || hash === ownerHash || hash === mappedOwnerHash || hash === mappedTrustedHash)) ||
+               cmd.level === 'public';
     
-                        if (isauth) {
+                        if (isAuth) {
                             cmd.execute({
                                 client: this.client,
                                 ...data

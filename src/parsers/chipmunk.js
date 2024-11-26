@@ -37,7 +37,7 @@ function inject(client) {
             const chatMsg = withArgs[2];
             if (!chatMsg || isTranslator === true) return;
 
-
+            try {
             let selector;
             if (username.hoverEvent?.contents?.id) {
                 selector = username.hoverEvent.contents.id;
@@ -51,6 +51,7 @@ function inject(client) {
                 rawMessage: client.ChatMessage.fromNotch(jsonMsg).toAnsi()
             };
             client.emit('parsedchat', chipmunkChat);
+        } catch {}
         } else {
             client.emit('nonParsedChat', client.ChatMessage.fromNotch(jsonMsg).toAnsi());
         }
