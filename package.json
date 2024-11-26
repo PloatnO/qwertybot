@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "main": "index.js",
   "scripts": {
-    "start": "node --no-deprecation src/index.js"
+    "start": "node --no-deprecation src/index.js",
+    "dev": "node --no-deprecation src/index.js --no-config-warn"
   },
   "keywords": [],
   "author": "ImGloriz/PloatnO",
