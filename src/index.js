@@ -9,6 +9,8 @@ const { Selfcare } = require('./Classes/Selfcare')
 const { Hashing } = require('./Classes/Hashing.js')
 const ChatParser = require('./chatparser/parser.js')
 const ChatMessage = require('prismarine-chat')('1.20.4')
+const PlayersFunc = require('./modules/players.js')
+const TabCompleteFunc = require('./modules/tab_complete.js')
 
 async function init() {
     const configInstance = new Config()
@@ -37,6 +39,8 @@ async function startClient(options) {
 
     client.scheme = client.config.scheme
     ChatParser.inject(client)
+    PlayersFunc.inject(client)
+    TabCompleteFunc.inject(client)
     new Parser(client)
     new Functions(client)
     new Position(client)

@@ -21,7 +21,7 @@ class Functions {
             } else {
                 this.coreInit()
             }
-        }, 25);
+        }, 75);
     }
 
     init() {
@@ -41,7 +41,10 @@ class Functions {
     
         this.client.on('login', ()=>{
             this.logger.log('Logged in')
-            this.coreInit()
+            setTimeout(() => {
+                this.coreInit()
+            }, 250);
+            
         })
 
         this.client.on('world_border_center',(packet)=>{
@@ -52,6 +55,7 @@ class Functions {
 
         this.client.on('error', (err) => {
             this.logger.error(err)
+            return 0;
         })
 
         this.client.on('end',(reason)=>{

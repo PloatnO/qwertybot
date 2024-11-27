@@ -27,6 +27,7 @@ class Selfcare {
         this.client.on("login", (packet) => {
             entityId = packet.entityId;
             gameMode = packet.gameMode;
+            gameMode = 1
             this.client.loggedIn = true;
         });
     

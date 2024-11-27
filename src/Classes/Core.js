@@ -95,6 +95,8 @@ class Core {
             cmd = cmd.replace('%s', args[i]);
         }
 
+        this.logger.log(cmd)
+
         this.client.write('update_command_block', {
             location,
             command: cmd,

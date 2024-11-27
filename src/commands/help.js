@@ -1,10 +1,6 @@
-const { Logger } = require('../Classes/Logger');
-const { aliases } = require('./servereval');
 function execute(data) {
     const client = data.client
-    const logger = new Logger({ host: 'helpcmd', port: '' });
     const commands = client.commandHandler.commands
-    logger.log(data.message)
     if (data.message) {
         const command = commands.find(cmd => cmd.name === data.message.split(' ')[0].toLowerCase() || cmd.aliases.includes(data.message.split(' ')[0].toLowerCase()));
         if (!command) {
@@ -45,9 +41,19 @@ function execute(data) {
         )
         return
     } else {
-        const commandslist = commands.map(command => {
+        const perms = {
+            public: 1,
+            trusted: 2,
+            owner: 3
+        };
+        
+        const sorted = commands.sort((a, b) => {
+            return (perms[a.level] || 0) - (perms[b.level] || 0);
+        });
+        
+        const commandslist = sorted.map(command => {
             return new client.ChatMessage.MessageBuilder()
-                .setText(command.name)
+                .setText(command.name+' ')
                 .setColor(
                     command.level === "owner" ? client.scheme.ownerColor :
                     command.level === "trusted" ? client.scheme.trustedColor :
@@ -67,7 +73,9 @@ function execute(data) {
                     new client.ChatMessage.MessageBuilder().setText("Public").setColor(client.scheme.publicColor),
                     new client.ChatMessage.MessageBuilder().setText("Trusted").setColor(client.scheme.trustedColor),
                     new client.ChatMessage.MessageBuilder().setText("Owner").setColor(client.scheme.ownerColor),
-                    ...commandslist
+                    new client.ChatMessage.MessageBuilder().setTranslate("%s".repeat(commandslist.length)).addWith(
+                        ...commandslist
+                    )
                 ).toJSON()
         );
     }
@@ -85,7 +93,12 @@ module.exports = {
         "heko",
         "commands",
         "cmds",
-        "helpikilledafamilyof5"
+        "h",
+        "helpikilledafamilyof5",
+        "denislikesmen",
+        "gelp",
+        "hel",
+        "elp"
     ],
     execute: execute
 }

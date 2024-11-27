@@ -69,10 +69,14 @@ function execute(data) {
 }
 
 module.exports = {
-    name: 'servereval',
-    desc: "Evaluates code on the server",
-    usages: ["servereval <code>"],
-    aliases: ["se"],
+    name: "servereval",
+    description: "Evaluates code on server :3 !!!",
+    usage: [
+        "servereval <code>"
+    ],
     level: 'owner',
+    aliases: [
+        "se"
+    ],
     execute: execute
 }

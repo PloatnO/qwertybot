@@ -17,7 +17,8 @@ class CommandHandler {
         this.Filecommands = []
         this.client.commandHandler = {
             commands: this.commands,
-            execute: (data) => this.executeCommand(data)
+            execute: (data) => this.executeCommand(data),
+            excludedCommands: new Set()
         }
         this.logger.debug(`Loading Commands...`)
         await this.getCommands()
@@ -60,6 +61,8 @@ class CommandHandler {
             );
             return;
         }
+
+        this.logger.log(data.message)
     
         const isPublicCommand = cmd.level === 'public';
         const isAuth = (cmd.level === 'owner' && (hash === ownerHash || hash === mappedOwnerHash)) ||
